@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import json
 import time
+import requests
 
 # Your organization's narratives/focus areas
 NARRATIVES = """
@@ -132,6 +133,50 @@ Be bold, clear, and action-oriented. Write in a tone that empowers citizens."""
     print(f"✅ Generated {len(content_results)} content briefs")
     return content_results
 
+def send_telegram(filename):
+    """Send results via Telegram"""
+    
+    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    
+    if not all([bot_token, chat_id]):
+        print("⚠️ Telegram credentials not configured, skipping")
+        return
+    
+    try:
+        print("📱 Sending to Telegram...")
+        
+        # Read the content
+        with open(filename, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Telegram has 4096 char limit, so split if needed
+        if len(content) <= 4000:
+            messages = [content]
+        else:
+            # Split into chunks
+            messages = [content[i:i+4000] for i in range(0, len(content), 4000)]
+        
+        # Send each chunk
+        for idx, msg in enumerate(messages, 1):
+            url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+            data = {
+                "chat_id": chat_id,
+                "text": msg if idx == 1 else f"(Part {idx})\n\n{msg}",
+                "parse_mode": "Markdown"
+            }
+            response = requests.post(url, json=data)
+            
+            if response.status_code == 200:
+                print(f"✅ Telegram message {idx}/{len(messages)} sent")
+            else:
+                print(f"❌ Telegram error: {response.text}")
+            
+            time.sleep(0.5)  # Small delay between messages
+                
+    except Exception as e:
+        print(f"❌ Telegram error: {e}")
+
 def save_results(results):
     """Save results to a markdown file"""
     if not results:
@@ -158,12 +203,16 @@ def save_results(results):
     
     print(f"💾 Content brief saved to {filename}")
     
-    # Also print to console for Railway logs
-    print("\n" + "="*60)
-    print("CONTENT PREVIEW:")
-    print("="*60)
+    # Print FULL content to Railway logs
+    print("\n" + "="*80)
+    print("📄 FULL CONTENT BRIEF:")
+    print("="*80)
     with open(filename, 'r', encoding='utf-8') as f:
-        print(f.read()[:500] + "...\n(see full file in output directory)")
+        print(f.read())
+    print("="*80 + "\n")
+    
+    # Send via Telegram
+    send_telegram(filename)
     
     return filename
 
@@ -186,7 +235,7 @@ def main():
     print(f"\n💾 Step 3: Saving results...")
     save_results(results)
     
-    print("\n✨ Done! Check the output folder for content briefs.")
+    print("\n✨ Done! Check your Telegram for content briefs.")
     print("="*60)
 
 if __name__ == "__main__":
