@@ -1,0 +1,152 @@
+import feedparser
+import anthropic
+import os
+from datetime import datetime
+import json
+
+# Your organization's narratives/focus areas
+NARRATIVES = """
+Gerakan Pengundi Sedar focuses on:
+- Electoral transparency and fairness
+- Voter education and empowerment
+- Government accountability
+- Anti-corruption efforts
+- Democratic participation
+- Youth political engagement
+"""
+
+# Malaysian news RSS feeds
+NEWS_FEEDS = [
+    "https://www.malaysiakini.com/rss/en/news.rss",
+    "https://www.thestar.com.my/rss/News/Nation/",
+    "https://www.freemalaysiatoday.com/feed/",
+]
+
+def fetch_news():
+    """Fetch latest news from RSS feeds"""
+    articles = []
+    
+    for feed_url in NEWS_FEEDS:
+        try:
+            feed = feedparser.parse(feed_url)
+            for entry in feed.entries[:10]:  # Get 10 latest from each
+                articles.append({
+                    'title': entry.title,
+                    'link': entry.link,
+                    'published': entry.get('published', 'N/A'),
+                    'summary': entry.get('summary', entry.get('description', ''))[:500]
+                })
+        except Exception as e:
+            print(f"Error fetching {feed_url}: {e}")
+    
+    return articles
+
+def analyze_with_claude(articles):
+    """Use Claude to filter and analyze relevant articles"""
+    
+    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+    
+    # Step 1: Filter relevant articles (using cheap Haiku)
+    articles_text = "\n\n".join([
+        f"[{i}] {a['title']}\n{a['summary']}"
+        for i, a in enumerate(articles)
+    ])
+    
+    filter_prompt = f"""Given these Malaysian news articles, identify which ones are relevant to:
+
+{NARRATIVES}
+
+Articles:
+{articles_text}
+
+Return ONLY a JSON array of article numbers that are relevant. Example: [0, 3, 7, 12]"""
+
+    filter_response = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=500,
+        messages=[{"role": "user", "content": filter_prompt}]
+    )
+    
+    try:
+        relevant_indices = json.loads(filter_response.content[0].text)
+    except:
+        # Fallback if JSON parsing fails
+        relevant_indices = [i for i in range(min(5, len(articles)))]
+    
+    relevant_articles = [articles[i] for i in relevant_indices if i < len(articles)]
+    
+    if not relevant_articles:
+        return None
+    
+    # Step 2: Generate content for relevant articles (using Sonnet)
+    content_results = []
+    
+    for article in relevant_articles[:5]:  # Limit to 5 to save costs
+        content_prompt = f"""As Gerakan Pengundi Sedar (a Malaysian voter awareness organization), analyze this news:
+
+Title: {article['title']}
+Summary: {article['summary']}
+Link: {article['link']}
+
+Our focus areas:
+{NARRATIVES}
+
+Provide:
+1. Why this matters to Malaysian voters (2-3 sentences)
+2. Key talking points (3-4 bullets)
+3. Suggested social media post (concise, engaging, under 280 chars)
+4. Poster design brief (visual concept, text overlay, color mood)
+
+Be bold, clear, and action-oriented. Write in a tone that empowers citizens."""
+
+        content_response = client.messages.create(
+            model="claude-sonnet-4-5-20250929",
+            max_tokens=1500,
+            messages=[{"role": "user", "content": content_prompt}]
+        )
+        
+        content_results.append({
+            'article': article,
+            'content': content_response.content[0].text
+        })
+    
+    return content_results
+
+def save_results(results):
+    """Save results to a markdown file"""
+    if not results:
+        print("No relevant articles found.")
+        return
+    
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    filename = f"content_{timestamp}.md"
+    
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(f"# Gerakan Pengundi Sedar - Content Brief\n")
+        f.write(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
+        f.write("---\n\n")
+        
+        for i, result in enumerate(results, 1):
+            f.write(f"## Article {i}: {result['article']['title']}\n\n")
+            f.write(f"**Source:** {result['article']['link']}\n\n")
+            f.write(result['content'])
+            f.write("\n\n---\n\n")
+    
+    print(f"✅ Content brief saved to {filename}")
+    return filename
+
+def main():
+    print("🔍 Fetching latest Malaysian news...")
+    articles = fetch_news()
+    print(f"📰 Found {len(articles)} articles")
+    
+    print("🤖 Analyzing with Claude...")
+    results = analyze_with_claude(articles)
+    
+    print("💾 Saving results...")
+    save_results(results)
+    
+    print("✨ Done!")
+
+if __name__ == "__main__":
+    main()
