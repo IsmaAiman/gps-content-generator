@@ -1,0 +1,61 @@
+{
+  "narratives": {
+    "focus_areas": [
+      "Ketelusan dan keadilan pilihan raya",
+      "Pendidikan dan pemerkasaan pengundi",
+      "Akauntabiliti kerajaan",
+      "Usaha anti-rasuah",
+      "Penyertaan demokratik",
+      "Penglibatan politik belia"
+    ]
+  },
+  
+  "output_format": {
+    "max_articles": 3,
+    "sections": [
+      {
+        "name": "Kepentingan",
+        "instruction": "Tulis 2 ayat sahaja kenapa ini penting",
+        "max_words": 40
+      },
+      {
+        "name": "Isi Utama",
+        "instruction": "3 perkara utama dalam bullet points, setiap satu maksimum 10 perkataan",
+        "format": "bullet",
+        "items": 3,
+        "max_words_per_item": 10
+      },
+      {
+        "name": "Post Media Sosial",
+        "instruction": "1 ayat yang menarik dan provokatif, maksimum 200 aksara",
+        "max_chars": 200
+      },
+      {
+        "name": "Konsep Poster",
+        "instruction": "Visual + teks dalam 1 ayat pendek sahaja",
+        "max_words": 20
+      }
+    ]
+  },
+  
+  "tone_guidelines": {
+    "style": "Berani dan langsung",
+    "voice": "Memperkasakan rakyat",
+    "avoid": ["Terlalu formal", "Bahasa birokrasi", "Ayat panjang"]
+  },
+  
+  "news_sources": [
+    "https://www.malaysiakini.com/rss/en/news.rss",
+    "https://www.thestar.com.my/rss/News/Nation/",
+    "https://www.freemalaysiatoday.com/feed/"
+  ],
+  
+  "telegram": {
+    "chat_ids": [
+      "CHAT_ID_1",
+      "CHAT_ID_2",
+      "CHAT_ID_3"
+    ],
+    "note": "Ganti CHAT_ID_1, CHAT_ID_2, etc dengan nombor chat ID sebenar. Boleh tambah lebih banyak."
+  }
+}
