@@ -47,7 +47,12 @@
   "news_sources": [
     "https://www.malaysiakini.com/rss/en/news.rss",
     "https://www.thestar.com.my/rss/News/Nation/",
-    "https://www.freemalaysiatoday.com/feed/"
+    "https://www.freemalaysiatoday.com/feed/",
+    "https://fetchrss.com/feed/1x48GzAp317z1x48Gb0jHCLS.rss",  
+    "http://www.chinadaily.com.cn/rss/china_rss.xml",
+    "http://www.chinadaily.com.cn/rss/bizchina_rss.xml",
+    "http://www.chinadaily.com.cn/rss/world_rss.xml",
+    "http://www.chinadaily.com.cn/rss/opinion_rss.xml"
   ],
   
   "telegram": {
