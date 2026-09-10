@@ -1,65 +1,100 @@
 {
   "narratives": {
     "focus_areas": [
-      "Ketelusan dan keadilan pilihan raya",
-      "Pendidikan dan pemerkasaan pengundi",
-      "Akauntabiliti kerajaan",
-      "Usaha anti-rasuah",
-      "Penyertaan demokratik",
-      "Penglibatan politik belia"
+      "Kepimpinan dan prestasi pemimpin",
+      "Tadbir urus dan akauntabiliti",
+      "Dasar dan keputusan awam",
+      "Prestasi dan keberkesanan kerajaan",
+      "Integriti dan etika politik",
+      "Demokrasi dan institusi negara",
+      "Pilihan raya dan representasi rakyat",
+      "Kuasa dan kepentingan politik",
+      "Kepentingan rakyat dan kesejahteraan awam",
+      "Hala tuju dan kepentingan negara"
     ]
   },
-  
+
   "output_format": {
     "max_articles": 3,
     "sections": [
       {
         "name": "Kepentingan",
-        "instruction": "Tulis 2 ayat sahaja kenapa ini penting",
+        "instruction": "Terangkan dalam 2 ayat mengapa isu ini penting kepada rakyat atau negara",
         "max_words": 40
       },
       {
+        "name": "Kaitan Politik",
+        "instruction": "Kenal pasti ahli politik, kerajaan, kementerian atau institusi politik yang berkaitan dan jelaskan kaitannya dengan isu",
+        "max_words": 50
+      },
+      {
+        "name": "Semakan Dakwaan",
+        "instruction": "Jika terdapat kenyataan ahli politik, bandingkan dengan data, sumber rasmi atau bukti yang tersedia. Bezakan fakta, dakwaan dan pendapat",
+        "max_words": 60
+      },
+      {
         "name": "Isi Utama",
-        "instruction": "3 perkara utama dalam bullet points, setiap satu maksimum 10 perkataan",
+        "instruction": "Senaraikan 3 perkara paling penting untuk difahami rakyat",
         "format": "bullet",
         "items": 3,
-        "max_words_per_item": 10
+        "max_words_per_item": 12
+      },
+      {
+        "name": "Sudut GPS",
+        "instruction": "Berikan satu persoalan kritikal yang wajar ditanya kepada pemimpin atau kerajaan berdasarkan isu dan bukti yang ditemui",
+        "max_words": 30
       },
       {
         "name": "Post Media Sosial",
-        "instruction": "1 ayat yang menarik dan provokatif, maksimum 200 aksara",
+        "instruction": "Tulis 1 ayat yang tajam, menarik dan membangkitkan persoalan rakyat tanpa membuat dakwaan yang tidak disokong bukti",
         "max_chars": 200
       },
       {
         "name": "Konsep Poster",
-        "instruction": "Visual + teks dalam 1 ayat pendek sahaja",
+        "instruction": "Cadangkan visual utama dan teks pendek yang menggambarkan persoalan atau konflik utama isu",
         "max_words": 20
       }
     ]
   },
-  
+
   "tone_guidelines": {
-    "style": "Berani dan langsung",
-    "voice": "Memperkasakan rakyat",
-    "avoid": ["Terlalu formal", "Bahasa birokrasi", "Ayat panjang"]
+    "style": "Berani, langsung dan kritikal",
+    "voice": "Memperkasakan rakyat untuk menilai pemimpin berdasarkan fakta dan prestasi",
+    "principles": [
+      "Kritik keputusan dan tindakan, bukan serangan peribadi",
+      "Bezakan fakta, dakwaan, pendapat dan tafsiran",
+      "Utamakan data dan sumber primer",
+      "Jangan menerima kenyataan politik tanpa semakan",
+      "Jangan memaksa sesuatu isu menjadi isu politik jika kaitannya tidak wujud"
+    ],
+    "avoid": [
+      "Terlalu formal",
+      "Bahasa birokrasi",
+      "Ayat panjang",
+      "Dakwaan tanpa sumber",
+      "Serangan peribadi",
+      "Sensasi tanpa konteks"
+    ]
   },
-  
+
   "news_sources": [
     "https://www.malaysiakini.com/rss/en/news.rss",
-    "https://www.thestar.com.my/rss/News/Nation/",
-    "https://www.freemalaysiatoday.com/feed/",
-    "https://fetchrss.com/feed/1x48GzAp317z1x48Gb0jHCLS.rss",  
+    "http://premium.sinarharian.com.my/rssFeed/14",
+    "http://premium.sinarharian.com.my/rssFeed/15",
+    "https://www.bharian.com.my/feed",
+    "https://fetchrss.com/feed/1x48GzAp317z1x48Gb0jHCLS.rss",
     "http://www.chinadaily.com.cn/rss/china_rss.xml",
     "http://www.chinadaily.com.cn/rss/bizchina_rss.xml",
     "http://www.chinadaily.com.cn/rss/world_rss.xml",
     "http://www.chinadaily.com.cn/rss/opinion_rss.xml"
   ],
-  
+
   "telegram": {
     "chat_ids": [
       "128242800",
       "126244941",
-      "-1003922260444",
+      "41285169",
+      "-1003922260444"
     ],
     "note": "Ganti CHAT_ID_1, CHAT_ID_2, etc dengan nombor chat ID sebenar. Boleh tambah lebih banyak."
   }
