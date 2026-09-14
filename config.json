@@ -15,7 +15,7 @@
   },
 
   "output_format": {
-    "max_articles": 3,
+    "max_articles": 5,
     "sections": [
       {
         "name": "Kepentingan",
@@ -78,15 +78,16 @@
   },
 
   "news_sources": [
-    "https://www.malaysiakini.com/rss/en/news.rss",
-    "http://premium.sinarharian.com.my/rssFeed/14",
-    "http://premium.sinarharian.com.my/rssFeed/15",
-    "https://www.bharian.com.my/feed",
-    "https://fetchrss.com/feed/1x48GzAp317z1x48Gb0jHCLS.rss",
-    "http://www.chinadaily.com.cn/rss/china_rss.xml",
-    "http://www.chinadaily.com.cn/rss/bizchina_rss.xml",
-    "http://www.chinadaily.com.cn/rss/world_rss.xml",
-    "http://www.chinadaily.com.cn/rss/opinion_rss.xml"
+  "https://news.google.com/rss/search?q=site%3Abernama.com&hl=en-MY&gl=MY&ceid=MY:en",
+  "https://www.astroawani.com/rss/politics/public",
+  "https://www.astroawani.com/rss/national/public",
+  "https://news.google.com/rss/search?q=site%3Amalaysiakini.com&hl=en-MY&gl=MY&ceid=MY:en",
+  "https://news.google.com/rss/search?q=site%3Afreemalaysiatoday.com&hl=en-MY&gl=MY&ceid=MY:en",
+  "https://news.google.com/rss/search?q=site%3Abharian.com.my&hl=ms&gl=MY&ceid=MY:ms",
+  "https://news.google.com/rss/search?q=site%3Asinarharian.com.my&hl=ms&gl=MY&ceid=MY:ms",
+  "https://news.google.com/rss/search?q=site%3Athestar.com.my&hl=en-MY&gl=MY&ceid=MY:en",
+  "https://news.google.com/rss/search?q=site%3Anst.com.my&hl=en-MY&gl=MY&ceid=MY:en",
+  "https://www.malaymail.com/rss/malaysia"
   ],
 
   "telegram": {
