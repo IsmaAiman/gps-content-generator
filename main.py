@@ -27,7 +27,7 @@ def fetch_news():
         try:
             print(f"📡 Mengambil dari {feed_url}")
             feed = feedparser.parse(feed_url)
-            for entry in feed.entries[:10]:  # Get 10 latest from each
+            for entry in feed.entries[:3]:  # Get 3 latest from each
                 articles.append({
                     'title': entry.title,
                     'link': entry.link,
